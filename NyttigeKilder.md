@@ -2,7 +2,7 @@
 
 ### Her legger jeg ved kilder jeg tror jeg kommer til å få bruk for under eksamen
 
-## Draw.io | 
+## Draw.io
 Brukes til å tegne nettverksdiagram og databasediagram, osv.
 
 ## Mal for å lage database tabell
