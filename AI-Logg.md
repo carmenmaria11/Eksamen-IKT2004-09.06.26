@@ -105,6 +105,9 @@ Dette er "salget" av løsningen din.
 
 ### Prompt 2: Promt for å hjelpe med kommandoene til å skille enhetene til bedrifter sånn at de ikke kan spionere på hverandre
 
+### Prompt:
+Jeg har laget et nettverk til små bedrift i Cisco Packet Tracer. Jeg har delt opp i 2 bedrifter som hver har 2 pcer og 1 printer. Venstre side er Bedrift 1 og har IPadreser som starter på 192.168.10.X. Høyre side er Bedrift 2 og starter på 192.168.20.X. Jeg har lagt inn alle IPadressene på pcene selv. nå trenger jeg hjelp til å låse switchen slik at de to sidene blir helt seperert. jeg trenger også kommandoen til ruteren som lager en brannmurregel slik at ingen av enhetene til bedrift a kan snakke med noen fra bedrift B. Kan du gi meg kodene og forklare enkelt hva de gjør sånn at jeg for god oversikt?
+
 ### Svar:
 Dette er et veldig klassisk og godt oppsett for å lære nettverkssikkerhet! For å oppnå det du ønsker, må vi gjøre to ting:
 
