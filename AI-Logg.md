@@ -4,6 +4,7 @@
 1. Prompt for å hjelpe med time management: Gemini Pro
 2. Prompt for å hjelpe med kommandoene til å skille enhetene til bedrifter sånn at de ikke kan spionere på hverandre: Gemini Pro
 3. Prompt for å genere logo til bedrift
+4. Prompt for hvorfor dns ikke vil virke i cisco... 
 
 ### Prompts og svar:
 ### Prompt 1: Brukt for time management
