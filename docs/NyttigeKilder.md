@@ -1,6 +1,6 @@
 # Nyttige Kilder
 
-### Her legger jeg ved kilder jeg tror jeg kommer til å få bruk for under eksamen
+### Her legger jeg ved kilder jeg tror jeg kommer til å få bruk for under eksamen, disse er forberedt på forhånd.
 
 ## Draw.io
 Brukes til å tegne nettverksdiagram og databasediagram, osv.
