@@ -2,9 +2,10 @@
 ### Her vil du se prompts og svar fra AI bruk
 ### Innhold: 
 1. Promt for å hjelpe med time management: Gemini Pro
+2. Promt for å hjelpe med kommandoene til å skille enhetene til bedrifter sånn at de ikke kan spionere på hverandre: Gemini Pro
 
 ### Prompts og svar:
-**Prompt 1: Brukt for time management**
+### Prompt 1: Brukt for time management
 
 **Prompt:**
 Lag en plan for denne eksamen, jeg vil helst gjøre alt selv, altså bruke minst mulig ai eller evt lære fra ai. lag en plan med programmene jeg trenger, ting som er nytting å søke på og hvor mye tid jeg må bruke på hver, jeg må også lage presentasjon. jeg har 4 timer. Eksamensoppgave: Situasjonsbeskrivelse: Kontorutleie
@@ -25,7 +26,7 @@ lag følgebe veukeder for Active Directory:
 -hvordan sette opp tilgang på mappe og filnivå
 husk at veilederen skal være brukervennlig.
 
-**Svar:**
+### Svar:
 Dette er en omfattende oppgave for fire timer, spesielt når du vil gjøre mest mulig selv. For å komme i mål må du være streng med tidsbruken og fokusere på funksjonalitet fremfor perfeksjon.
 
 ## 🕒 Tidsplan (Total tid: 4 timer)
@@ -101,3 +102,101 @@ Dette er "salget" av løsningen din.
 
 > **Tips til eksamen:**
 > Ikke bruk for lang tid på å finne den "perfekte" fargen på nettsiden. Sensor ser etter teknisk forståelse og evne til å forklare *hvorfor* du har valgt subnettmaskene og brannmurreglene du har satt opp.
+
+### Prompt 2: Promt for å hjelpe med kommandoene til å skille enhetene til bedrifter sånn at de ikke kan spionere på hverandre
+
+### Svar:
+Dette er et veldig klassisk og godt oppsett for å lære nettverkssikkerhet! For å oppnå det du ønsker, må vi gjøre to ting:
+
+1. **På switchen:** Opprette to **VLAN** (Virtuelle lokalnettverk). Dette gjør at switchen oppfører seg som om den er to fysisk separate switcher, slik at trafikk ikke kan flyte direkte mellom dem på lag 2.
+2. **På ruteren:** Lage en **ACL** (Access Control List), som fungerer som en brannmurregel. Siden ruteren i utgangspunktet vil prøve å rute trafikk mellom de to nettene, bruker vi denne regelen til å stoppe den trafikken.
+
+Her er steg-for-steg-kommandoene du trenger for å låse ned nettverket.
+
+## Konfigurasjon i Packet Tracer
+
+1. **Steg 1: Del opp switchen i VLAN:** Gjøres på switchen.
+Klikk på switchen, gå til **CLI**-fanen, trykk Enter og lim inn følgende koder.
+
+*Merk: I eksempelet under antar jeg at Bedrift 1 bruker portene FastEthernet 0/1 til 0/3, og Bedrift 2 bruker portene 0/4 til 0/6. Du må endre portnumrene så de matcher der du har plugget inn kablene dine.*
+
+```text
+enable
+configure terminal
+
+# Opprett VLAN for Bedrift 1
+vlan 10
+name Bedrift_1
+exit
+
+# Opprett VLAN for Bedrift 2
+vlan 20
+name Bedrift_2
+exit
+
+# Legg portene til Bedrift 1 inn i VLAN 10 (tilpass portene til dine)
+interface range fa0/1 - 3
+switchport mode access
+switchport access vlan 10
+exit
+
+# Legg portene til Bedrift 2 inn i VLAN 20 (tilpass portene til dine)
+interface range fa0/4 - 6
+switchport mode access
+switchport access vlan 20
+exit
+
+```
+
+**Hva gjør dette?** Vi forteller switchen at portene for Bedrift 1 og Bedrift 2 tilhører helt forskjellige verdener. Enheter i VLAN 10 kan nå overhodet ikke se eller snakke med enheter i VLAN 20 gjennom switchen.
+
+
+2. **Steg 2: Opprett brannmurreglene (ACL):** Gjøres på ruteren.
+Når du bruker en ruter til å binde nettverkene sammen (for eksempel for at begge skal nå internett), vil ruteren automatisk prøve å hjelpe dem med å snakke sammen. For å stoppe dette lager vi en **utvidet ACL** (Extended Access Control List) på ruteren.
+
+Gå inn på ruteren sin **CLI** og skriv:
+
+```text
+enable
+configure terminal
+
+# Regel for Bedrift 1: Nekt trafikk som skal til Bedrift 2
+access-list 101 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+access-list 101 permit ip any any
+
+# Regel for Bedrift 2: Nekt trafikk som skal til Bedrift 1
+access-list 102 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+access-list 102 permit ip any any
+
+```
+
+**Hva gjør dette?**
+
+* `deny ip 192.168.10.0 0.0.0.255 ...`: Forteller ruteren at pakker som kommer fra 10-nettverket og prøver å nå 20-nettverket, skal kastes rett i søpla. `0.0.0.255` er en *wildcard mask* som betyr "gjelder alle adresser i dette subnettet".
+* `permit ip any any`: **Veldig viktig!** Cisco-rutere blokkerer *alt* som ikke er spesifikt tillatt som standard. Denne linjen sørger for at alt annet av trafikk (for eksempel ut mot internett) fortsatt er lov.
+
+
+3. **Steg 3: Aktivér brannmuren på ruterens grensesnitt:** Gjøres på ruteren.
+Reglene vi nettopp laget gjør ingenting før vi henger dem på portene (interfacene) der trafikken faktisk går inn i ruteren.
+
+Du må gå inn på interfacene som peker ned mot de to bedriftene (hvis du bruker *Router-on-a-Stick* med subinterfaces, går du inn på f.eks. `.10` og `.20`):
+
+```text
+# Gå inn på grensesnittet til Bedrift 1 (bytt ut med ditt interface-navn)
+interface gigabitEthernet 0/0.10
+ip access-group 101 in
+exit
+
+# Gå inn på grensesnittet til Bedrift 2 (bytt ut med ditt interface-navn)
+interface gigabitEthernet 0/0.20
+ip access-group 102 in
+exit
+
+```
+
+**Hva gjør dette?** `ip access-group 101 in` betyr at i det sekundet en pakke beveger seg **inn** i ruteren fra Bedrift 1, sjekker ruteren regelboken vår (Access-list 101). Hvis pakken prøver å besøke Bedrift 2, blir den stoppet i døra.
+
+
+---
+
+> **Et lite tips når du tester i Packet Tracer:** Bruk det lukkede konvolutt-ikonet (Simple PDU) til å pinge fra en PC i Bedrift 1 til en PC i Bedrift 2. Du vil se at statusen nede i høyre hjørne raskt endrer seg til **Failed**, noe som betyr at den nye brannmuren din gjør akkurat det den skal!
