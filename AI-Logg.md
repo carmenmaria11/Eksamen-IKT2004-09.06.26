@@ -1,9 +1,11 @@
 # AI-Logg
 ### Her vil du se prompts og svar fra AI bruk
-**Innhold:** 
-- Promt 1: Gemini Pro
+###Innhold: 
+1. Promt for å hjelpe med time management: Gemini Pro
 
-Prompt 1: Brukt for time management
+### Prompts og svar:
+**Prompt 1: Brukt for time management**
+
 **Prompt:**
 Lag en plan for denne eksamen, jeg vil helst gjøre alt selv, altså bruke minst mulig ai eller evt lære fra ai. lag en plan med programmene jeg trenger, ting som er nytting å søke på og hvor mye tid jeg må bruke på hver, jeg må også lage presentasjon. jeg har 4 timer. Eksamensoppgave: Situasjonsbeskrivelse: Kontorutleie
 Et selskap som driver med kontorutleie, trenger å sette opp sitt nettverk og webbasert løsning for bedriften. Slik at de kan tilby sine kontortjenester til sine private kunder og små bedrifter.
