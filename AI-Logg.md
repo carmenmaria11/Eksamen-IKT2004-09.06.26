@@ -1,6 +1,6 @@
 # AI-Logg
 ### Her vil du se prompts og svar fra AI bruk
-###Innhold: 
+### Innhold: 
 1. Promt for å hjelpe med time management: Gemini Pro
 
 ### Prompts og svar:
