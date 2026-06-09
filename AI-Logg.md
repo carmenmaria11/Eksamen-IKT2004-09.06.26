@@ -1,8 +1,9 @@
 # AI-Logg
 ### Her vil du se prompts og svar fra AI bruk
 ### Innhold: 
-1. Promt for å hjelpe med time management: Gemini Pro
-2. Promt for å hjelpe med kommandoene til å skille enhetene til bedrifter sånn at de ikke kan spionere på hverandre: Gemini Pro
+1. Prompt for å hjelpe med time management: Gemini Pro
+2. Prompt for å hjelpe med kommandoene til å skille enhetene til bedrifter sånn at de ikke kan spionere på hverandre: Gemini Pro
+3. Prompt for å genere logo til bedrift
 
 ### Prompts og svar:
 ### Prompt 1: Brukt for time management
@@ -203,3 +204,10 @@ exit
 ---
 
 > **Et lite tips når du tester i Packet Tracer:** Bruk det lukkede konvolutt-ikonet (Simple PDU) til å pinge fra en PC i Bedrift 1 til en PC i Bedrift 2. Du vil se at statusen nede i høyre hjørne raskt endrer seg til **Failed**, noe som betyr at den nye brannmuren din gjør akkurat det den skal!
+
+### Prompt 3
+### Prompt:
+generer logo til kontoruteleie bedrift
+
+### Svar:
+blob:https://gemini.google.com/aab1bbd1-c240-477c-9745-0a607504ebc4
